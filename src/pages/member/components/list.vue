@@ -4,12 +4,12 @@
       <el-table
         :data="list"
         style="width: 100%; margin-bottom: 20px"
-        row-key="id"
+        row-key="uid"
         border
         :tree-props="{ children: 'children' }"
       
       >
-        <el-table-column prop="id" label="用户编号" sortable width="180">     
+        <el-table-column prop="uid" label="用户编号" sortable width="180">     
         </el-table-column>
         <el-table-column prop="nickname" label="昵称" sortable width="180">
          
@@ -57,10 +57,10 @@ export default {
     ...mapActions({
       reqListAction: "member/reqListAction",
     }),
-    // 编辑
-    edit(id) {
-      this.$emit("edit", id);
+    edit(uid) {
+      this.$emit("edit", uid);
     },
+    
     mounted() {
       //获取list
       // this.reqListAction();

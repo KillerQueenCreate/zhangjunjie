@@ -22,8 +22,8 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
-        <el-button type="primary" @click="edit(scope.row.id)">编辑</el-button>
-        <el-button type="primary" @click="update">修改</el-button>
+        <!-- <el-button type="primary" @click="edit(scope.row.uid)">编辑</el-button> -->
+        <el-button type="primary" @click="update();">修改</el-button>
       </div>
     </el-dialog>
   </div>
@@ -31,9 +31,9 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import {
-  reqmemberDetail,
+  reqMemberDetail,
   reqMemberList,
-  reqmemberUpdate,
+  reqMemberUpdate,
 } from "../../../utils/request";
 import { warningAlert, successAlert } from "../../../utils/alert";
 export default {
@@ -80,18 +80,26 @@ export default {
     //编辑
     edit(uid) {
       this.$emit("edit", uid);
+// this.form.password.length==0?(this.form.password=this.form.password):this.form.password=""
+      // console.log(this.form.password);
+    },
+    //记住密码
+    handleSubmit(){
+      let cach_password=this.form.password
     },
     look(uid) {
       // 发请求
       reqMemberDetail(uid).then((res) => {
+        
         if (res.data.code == 200) {
           this.form = res.data.list;
-          //补id
-          this.form.id = id;
+          this.form.password=""
+          
         } else {
           warningAlert(res.data.msg);
         }
       });
+      
     },
     update() {
       reqMemberUpdate(this.form).then((res) => {
@@ -100,6 +108,7 @@ export default {
           this.empty();
           this.cancel();
           this.reqMemberList();
+          
         } else {
           warningAlert(res.data.msg);
         }

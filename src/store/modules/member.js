@@ -20,7 +20,6 @@ const actions = {
         reqMemberList().then(res => {
             context.commit("changeList", res.data.list)
         })
-        console.log(list);
     },
 
 }

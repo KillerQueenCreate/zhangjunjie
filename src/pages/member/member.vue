@@ -38,12 +38,14 @@ export default {
     }),
     //编辑
     edit(uid) {
+      this.info.isshow = true;
+      this.info.isAdd = false;
       //让add组件发起获取详情的请求
-      this.$refs.add.look(uid)
+      this.$refs.add.look(uid);
     },
   },
   mounted() {
-    this.reqListAction()
+    this.reqListAction();
   },
 };
 </script>
