@@ -11,13 +11,14 @@ const mutations={
 }
 
 const actions={
-    //页面请求
+    // 页面请求
     reqListAction(context){
         //发送请求
         reqCateList({istree:true}).then(res=>{
             context.commit("changeList",res.data.list)
         })
     }
+
 }
 const getters={
     list(state){

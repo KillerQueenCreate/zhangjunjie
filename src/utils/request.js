@@ -1,6 +1,9 @@
 import axios from "axios"
 import qs from "qs"
 import Vue from "vue"
+import store from "../store"
+import {successAlert,warningAlert} from "./alert"
+import router from "../router"
 //开发环境下使用
 Vue.prototype.$imgPre = "http://localhost:3000"
 let baseUrl = "/api";
@@ -10,11 +13,24 @@ let baseUrl = "/api";
 // Vue.prototype.$imgPre=""
 // let baseUrl="";
 
+//请求拦截 后台APP.js后端登录拦截打开
+axios.interceptors.request.use(req => {
+    if (req.url != baseUrl + "/api/userlogin") {
+        req.headers.authorization = store.state.userInfo.token
+    }
+    return req
+})
+
 //响应拦截
 axios.interceptors.response.use(res => {
     console.group("=====本次请求路径是:" + res.config.url)
     console.log(res);
     console.groupEnd()
+    //用户掉线
+    if(res.data.msg=="登录已过期或访问权限受限"){
+        warningAlert(res.data.msg)
+        router.push("/login")
+    }
     return res;
 })
 
@@ -176,6 +192,14 @@ export const reqManageUpdate = (params) => {
 
 }
 
+//登录
+export const reqLogin = (params) => {
+    return axios({
+        url: baseUrl + "/api/userlogin",
+        method: "post",
+        data: qs.stringify(params)
+    })
+}
 
 // ********************商品分类管理**************
 //增加
@@ -299,63 +323,93 @@ export const reqSpecsUpdate = (params) => {
 
 // =========商品管理=================
 //添加
-export const reqGoodsAdd=(form)=>{
-    let data=new FormData()
-    for(let i in form){
-        data.append(i,form[i])
+export const reqGoodsAdd = (form) => {
+    let data = new FormData()
+    for (let i in form) {
+        data.append(i, form[i])
     }
     return axios({
-        url:baseUrl+"/api/goodsadd",
-        method:"post",
-        data:data
+        url: baseUrl + "/api/goodsadd",
+        method: "post",
+        data: data
     })
 }
 
 //总数
-export const reqGoodsCount=()=>{
+export const reqGoodsCount = () => {
     return axios({
-        url:baseUrl+"/api/goodscount",
-        method:"get",
+        url: baseUrl + "/api/goodscount",
+        method: "get",
 
     })
 }
 
 //列表
-export const reqGoodsList=(params)=>{
+export const reqGoodsList = (params) => {
     return axios({
-        url:baseUrl+"/api/goodslist",
-        method:"get",
-        params:params
+        url: baseUrl + "/api/goodslist",
+        method: "get",
+        params: params
     })
 }
 
 //详情
-export const reqGoodsDetail=(params)=>{
+export const reqGoodsDetail = (params) => {
     return axios({
-        url:baseUrl+"/api/goodsinfo",
-        method:"get",
-        params:params
+        url: baseUrl + "/api/goodsinfo",
+        method: "get",
+        params: params
     })
 }
 
 //修改
-export const reqGoodsUpdate=(form)=>{
-    let data=new FormData()
-    for(let i in form){
-        data.append(i,form[i])
+export const reqGoodsUpdate = (form) => {
+    let data = new FormData()
+    for (let i in form) {
+        data.append(i, form[i])
     }
     return axios({
-        url:baseUrl+"/api/goodsedit",
-        method:"post",
-        data:data
+        url: baseUrl + "/api/goodsedit",
+        method: "post",
+        data: data
     })
 }
 
 //删除 params={id:'1'}
-export const reqGoodsDel=(params)=>{
+export const reqGoodsDel = (params) => {
     return axios({
-        url:baseUrl+"/api/goodsdelete",
-        method:"post",
-        data:qs.stringify(params)
+        url: baseUrl + "/api/goodsdelete",
+        method: "post",
+        data: qs.stringify(params)
     })
+}
+
+// ============会员管理==========
+//会员列表  
+export const reqMemberList = (params) => {
+    return axios({
+        url: baseUrl + "/api/memberlist",
+        method: "get",
+        params: params
+    })
+}
+
+
+//请求一条数据
+export const reqMemberDetail = (uid) => {
+    return axios({
+        url: baseUrl + "/api/memberinfo",
+        method: "get",
+        params: {uid:uid}
+    })
+}
+
+//修改
+export const reqMemberUpdate = (params) => {
+    return axios({
+        url: baseUrl + "/api/memberedit",
+        method: "post",
+        data: qs.stringify(params)
+    })
+
 }

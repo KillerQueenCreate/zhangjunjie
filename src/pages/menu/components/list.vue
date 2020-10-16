@@ -6,7 +6,7 @@
     border
     :tree-props="{ children: 'children' }"
   >
-    <el-table-column prop="id" label="菜单编号" sortable width="180">
+    <el-table-column prop="id" label="菜单" sortable width="180">
     </el-table-column>
     <el-table-column prop="title" label="菜单名称" sortable width="180">
     </el-table-column>
