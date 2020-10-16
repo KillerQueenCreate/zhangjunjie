@@ -8,7 +8,7 @@
   >
     <el-table-column prop="id" label="分类编号" sortable width="180">
     </el-table-column>
-    <el-table-column prop="catename" label="分类名称" sortable width="180">
+    <el-table-column prop="title" label="分类名称" sortable width="180">
     </el-table-column>
     <el-table-column label="图片">
       <template slot-scope="scope" v-if="scope.row.img!='null'">
@@ -33,7 +33,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import { successAlert, warningAlert } from "../../../utils/alert";
-import { reqCateDel } from "../../../utils/request";
+import { reqBannerDel } from "../../../utils/request";
 export default {
   grops: [],
   components: {},
@@ -42,12 +42,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      list: "cate/list",
+      list: "banner/list",
     }),
   },
   methods: {
     ...mapActions({
-      reqListAction: "cate/reqListAction",
+      reqListAction: "banner/reqListAction",
     }),
     //编辑
     edit(id) {
@@ -56,7 +56,7 @@ export default {
     //删除
 
     dele(id) {
-      reqCateDel(id).then((res) => {
+      reqBannerDel(id).then((res) => {
         if (res.data.code == 200) {
           successAlert(res.data.msg);
           this.reqListAction();

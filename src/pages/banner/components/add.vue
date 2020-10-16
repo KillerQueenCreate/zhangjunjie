@@ -6,22 +6,10 @@
       @closed="close"
     >
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="上级分类">
-          <el-select v-model="form.pid" placeholder="请选择上级分类">
-            <el-option label="顶级分类" :value="0"></el-option>
-
-            <el-option
-              v-for="item in list"
-              :key="item.id"
-              :value="item.id"
-              :label="item.name"
-            ></el-option>
-          </el-select>
+        <el-form-item  label="标题">
+          <el-input v-model="form.title"></el-input>
         </el-form-item>
 
-        <el-form-item label="分类名称">
-          <el-input v-model="form.catename"></el-input>
-        </el-form-item>
         <!-- 原生上传文件 start -->
         <!-- <el-form-item label="图片" v-if="form.pid!=0">
           <div class="my-upload">
@@ -63,9 +51,9 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import {
-  reqCateAdd,
-  reqCateDetail,
-  reqCateUpdate,
+  reqBannerAdd,
+  reqBannerDetail,
+  reqBannerUpdate,
 } from "../../../utils/request";
 import { warningAlert, successAlert } from "../../../utils/alert";
 export default {
@@ -75,8 +63,7 @@ export default {
     return {
       imgUrl: "",
       form: {
-        pid: 0,
-        catename: "",
+        title: "",
         img: null,
         status: 1,
       },
@@ -84,12 +71,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      list: "cate/list",
+      list: "banner/list",
     }),
   },
   methods: {
     ...mapActions({
-      reqListAction: "cate/reqListAction",
+      reqListAction: "banner/reqListAction",
     }),
     cancel() {
       this.info.isshow = false;
@@ -108,8 +95,7 @@ export default {
     //数据重置
     empty() {
       this.form = {
-        pid: 0,
-        catename: "",
+        title: "",
         img: null,
         status: 1,
       };
@@ -138,6 +124,7 @@ export default {
         warningAlert("图片格式错误");
         return;
       }
+        //通过文件生成地址
         this.imgUrl=URL.createObjectURL(file);
         this.form.img=file;
     },
@@ -151,7 +138,7 @@ export default {
     },
     add() {
       // console.log(this.form);
-      reqCateAdd(this.form).then((res) => {
+      reqBannerAdd(this.form).then((res) => {
         if (res.data.code == 200) {
           //success
           successAlert(res.data.msg);
@@ -167,7 +154,7 @@ export default {
     //获取菜单详情
     look(id) {
       //发请求
-      reqCateDetail(id).then((res) => {
+      reqBannerDetail(id).then((res) => {
         if (res.data.code == 200) {
           this.form = res.data.list;
           this.form.id = id;
@@ -178,7 +165,7 @@ export default {
       });
     },
     update() {
-      reqCateUpdate(this.form).then((res) => {
+      reqBannerUpdate(this.form).then((res) => {
         if (res.data.code == 200) {
           successAlert(res.data.msg);
           this.empty();

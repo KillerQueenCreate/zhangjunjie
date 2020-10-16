@@ -72,11 +72,11 @@ export let indexRoutes=[
   },
   {
     path:"banner",
-    name:"轮播图管理",
+    name:"轮播图列表",
     component:()=>import("../pages/banner/banner.vue"),
-    beforeEnter(to,from,next){
-      checkedEnter('/banner',next)
-    }
+    // beforeEnter(to,from,next){
+    //   checkedEnter('/banner',next)
+    // }
   },
   {
     path:"seckill",

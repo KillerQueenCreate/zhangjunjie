@@ -23,7 +23,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
         <!-- <el-button type="primary" @click="edit(scope.row.uid)">编辑</el-button> -->
-        <el-button type="primary" @click="update();">修改</el-button>
+        <el-button type="primary" @click="update">修改</el-button>
       </div>
     </el-dialog>
   </div>
@@ -84,9 +84,7 @@ export default {
       // console.log(this.form.password);
     },
     //记住密码
-    handleSubmit(){
-      let cach_password=this.form.password
-    },
+
     look(uid) {
       // 发请求
       reqMemberDetail(uid).then((res) => {

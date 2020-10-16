@@ -413,3 +413,65 @@ export const reqMemberUpdate = (params) => {
     })
 
 }
+
+// ***************轮播图管理**************
+//增加
+export const reqBannerAdd = (params) => {
+    let data = new FormData()
+    // data.append("pid",1)
+    // data.append("catename","123")
+    // data.append("img",File)
+    // data.append("status",1)
+    for (let i in params) {
+        data.append(i, params[i])
+    }
+    return axios({
+        url: baseUrl + "/api/banneradd",
+        method: "post",
+        data: data
+    })
+
+}
+
+//列表 params={istree:true} {pid:0}
+export const reqBannerList = (params) => {
+    return axios({
+        url: baseUrl + "/api/bannerlist",
+        method: "get",
+        params: params
+    })
+}
+
+//删除
+export const reqBannerDel = (id) => {
+    return axios({
+        url: baseUrl + "/api/bannerdelete",
+        method: "post",
+        data: qs.stringify({ id })
+    })
+}
+
+//请求一条数据
+export const reqBannerDetail = (id) => {
+    return axios({
+        url: baseUrl + "/api/bannerinfo",
+        method: "get",
+        params: {
+            id: id
+        }
+    })
+}
+
+
+//修改
+export const reqBannerUpdate = (params) => {
+    let data = new FormData()
+    for (let i in params) {
+        data.append(i, params[i])
+    }
+    return axios({
+        url: baseUrl + "/api/banneredit",
+        method: "post",
+        data: data
+    })
+}
