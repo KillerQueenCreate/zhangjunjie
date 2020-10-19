@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "echarts": "^4.9.0",
-    "element-ui": "^2.13.2",
+    "element-ui": "2.13.2",
     "qs": "^6.9.4",
     "stylus": "^0.54.8",
     "stylus-loader": "^3.0.0",

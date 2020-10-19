@@ -13,7 +13,7 @@ const mutations={
     //修改list
     changeList(state,arr){
         state.list=arr
-        console.log(state.list);
+        // console.log(state.list);
     },
     changeTotal(state,num){
         state.total=num

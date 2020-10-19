@@ -6,7 +6,7 @@
       @closed="close"
     >
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item  label="标题">
+        <el-form-item  label="标题" required>
           <el-input v-model="form.title"></el-input>
         </el-form-item>
 
@@ -19,7 +19,8 @@
           </div>
         </el-form-item> -->
         <!-- 原生上传文件 end -->
-        <el-form-item lable="图片">
+        <div class="img_box">
+        <el-form-item lable="图片" class="pic">
             
                 <el-upload class="avatar-uploader" action="#" 
                 :show-file-list="false" :on-change="getFile2"
@@ -29,7 +30,17 @@
                 </el-upload>
             
         </el-form-item>
-
+        <el-form-item lable="图片" class="pic">
+            
+                <el-upload class="avatar-uploader" action="#" 
+                :show-file-list="false" :on-change="getFile2"
+                >
+                <img v-if="imgUrl" :src="imgUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+            
+        </el-form-item>
+        </div>
         <el-form-item label="状态">
           <el-switch
             v-model="form.status"
@@ -235,5 +246,14 @@ export default {
     width:178px;
     height:178px;
     display :block;
+}
+.pic{
+  width:200px;
+  float left;
+}
+.img_box:after{
+  display:block;
+  content:'';
+  clear both;
 }
 </style>

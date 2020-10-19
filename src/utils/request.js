@@ -2,7 +2,7 @@ import axios from "axios"
 import qs from "qs"
 import Vue from "vue"
 import store from "../store"
-import {successAlert,warningAlert} from "./alert"
+import { successAlert, warningAlert } from "./alert"
 import router from "../router"
 //开发环境下使用
 Vue.prototype.$imgPre = "http://localhost:3000"
@@ -27,7 +27,7 @@ axios.interceptors.response.use(res => {
     console.log(res);
     console.groupEnd()
     //用户掉线
-    if(res.data.msg=="登录已过期或访问权限受限"){
+    if (res.data.msg == "登录已过期或访问权限受限") {
         warningAlert(res.data.msg)
         router.push("/login")
     }
@@ -400,7 +400,7 @@ export const reqMemberDetail = (uid) => {
     return axios({
         url: baseUrl + "/api/memberinfo",
         method: "get",
-        params: {uid:uid}
+        params: { uid: uid }
     })
 }
 
@@ -473,5 +473,52 @@ export const reqBannerUpdate = (params) => {
         url: baseUrl + "/api/banneredit",
         method: "post",
         data: data
+    })
+}
+
+// =========秒杀活动=================
+//添加
+export const reqSeckAdd = (form) => {
+  
+    return axios({
+        url: baseUrl + "/api/seckadd",
+        method: "post",
+        data: qs.stringify(form)
+    })
+}
+
+//列表
+export const reqSeckList = (params) => {
+    return axios({
+        url: baseUrl + "/api/secklist",
+        method: "get",
+        params: params
+    })
+}
+
+//请求一条数据
+export const reqSeckDetail = (id) => {
+    return axios({
+        url: baseUrl + "/api/seckinfo",
+        method: "get",
+        params: { id: id }
+    })
+}
+
+//修改
+export const reqSeckUpdate = (form) => {
+    return axios({
+        url: baseUrl + "/api/seckedit",
+        method: "post",
+        data: form
+    })
+}
+
+//删除 params={id:'1'}
+export const reqSeckDel = (id) => {
+    return axios({
+        url: baseUrl + "/api/seckdelete",
+        method: "post",
+        data: qs.stringify(id)
     })
 }

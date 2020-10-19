@@ -80,7 +80,7 @@ export let indexRoutes=[
   },
   {
     path:"seckill",
-    name:"秒杀活动",
+    name:"活动列表",
     component:()=>import("../pages/seckill/seckill.vue"),
     beforeEnter(to,from,next){
       checkedEnter('/seckill',next)
